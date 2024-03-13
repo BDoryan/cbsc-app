@@ -19,7 +19,8 @@ class UserController extends Controller
         return $users;
     }
 
-    public function me(Request $request) {
+    public function me(Request $request)
+    {
         $user = $request->user();
         $user->load('licensed');
         $user->load('managing');
@@ -57,10 +58,57 @@ class UserController extends Controller
             return response()->json($validator->errors(), 422);
 
         try {
-            $response = User::create($all);
-            $response->password_generated = $password_generated;
+            if ($request->hasFile('profile_image')) {
+                // Récupérer l'image depuis la requête
+                $profileImage = $request->file('profile_image');
 
-            return $response;
+                // Enregistrer l'image dans le stockage (par exemple, le dossier public)
+                $path = $profileImage->store('public/pictures/users/profile_image', 'public');
+
+                // Stocker le chemin de l'image dans le tableau $all
+                $all['picture'] = url('/storage/' . $path);
+            } else {
+                $sex = $all['sex'];
+                if ($sex == User::SEX_MALE)
+                    $all['picture'] = url('pictures/no-picture-male.jpg');
+                else if ($sex == User::SEX_WOMEN)
+                    $all['picture'] = url('pictures/no-picture-women.jpg');
+            }
+
+            $role = $all['role'];
+
+            if (!empty($role)) {
+                if ($role == User::ROLE_LICENSED) {
+                    $validator = Validator::make($all, [
+                        'license_number' => 'required|unique:licensed_users'
+                    ]);
+
+                    if ($validator->fails())
+                        return response()->json($validator->errors(), 422);
+
+                    $user = User::create($all);
+                    $user->licensed()->create([
+                        'license_number' => $all['license_number'],
+                    ]);
+
+                } else if ($role == User::ROLE_MANAGING) {
+                    $user = User::create($all);
+                    $user->managing()->create([
+                        'role' => $all['role'],
+                    ]);
+                } else {
+                    return response()->json(['message' => 'Invalid role'], 422);
+                }
+            }
+
+            if(empty($user))
+                $user = User::create($all);
+
+            $user->password_generated = $password_generated;
+
+            // Send email here
+
+            return $user;
         } catch (Exception $e) {
             return response()->json($e->getMessage(), 500);
         }

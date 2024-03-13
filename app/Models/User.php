@@ -12,6 +12,12 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ROLE_LICENSED = 'licensed';
+    const ROLE_MANAGING = 'managing';
+
+    const SEX_WOMEN = 'W';
+    const SEX_MALE = "M";
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,7 +29,9 @@ class User extends Authenticatable
         'email',
         'phone',
         'birthdate',
+        'sex',
         'password',
+        'picture'
     ];
 
     /**
@@ -51,6 +59,7 @@ class User extends Authenticatable
         'email' => 'required|email|unique:users',
         'phone' => 'required|min:10|max:10|unique:users',
         'birthdate' => 'required|date',
+        'sex' => 'required|in:W,M',
     ];
 
     public function licensed(): \Illuminate\Database\Eloquent\Relations\HasOne

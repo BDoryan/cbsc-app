@@ -11,8 +11,8 @@ class UserAuthController extends Controller
 {
 
     /**
-     * IKQlLaBsENs2cvd
-     * 1|t4CSWi1BVbE3YQdzlKpxYTXz96jElkRf2IzOWkmv
+     * l2hUYYkGpLO8Uwf
+     * 3|ZUysVUS0nYBxcx4YYmRROTbk8OeDvhWqupF5bYEh
      */
 
     // login to user
