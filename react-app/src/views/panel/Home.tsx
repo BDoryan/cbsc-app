@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// @ts-ignore
 import { Link, RouteComponentProps } from 'react-router-dom';
 
 const Home: React.FC<RouteComponentProps<{}>> = () => {

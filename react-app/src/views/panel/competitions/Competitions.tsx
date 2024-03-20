@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// @ts-ignore
 import { Link, RouteComponentProps } from 'react-router-dom';
 
 const Competitions: React.FC<RouteComponentProps<{}>> = () => {
@@ -10,7 +11,7 @@ const Competitions: React.FC<RouteComponentProps<{}>> = () => {
                 Retrouvez tous les membres de votre club et faciliter leurs gestions et la communication avec eux.
             </p>
             <hr className="my-5" />
-            
+
         </>
     )
 }

@@ -186,7 +186,7 @@ return [
         'password' => 'Mot de passe',
         'password_confirmation' => 'Confirmation du mot de passe',
         'phone' => 'Téléphone',
-        'birthday' => 'Date de naissance',
+        'birthdate' => 'Date de naissance',
         'title' => 'Titre',
         'content' => 'Contenu',
         'description' => 'Description',

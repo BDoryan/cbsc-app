@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Link, RouteComponentProps, useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import ConfirmDialog from "../dialog/ConfirmDialog";
 import {useDialog} from "../../context/DialogContext";
 

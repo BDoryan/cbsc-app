@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['*'], // il faut changer cette ligne pour plus de sécurité
 
     'allowed_origins_patterns' => [],
 

@@ -32,10 +32,11 @@ class UserAuthController extends Controller
         if (!$user || !password_verify($all['password'], $user->password)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
-
         $token = $user->createToken('token-name')->plainTextToken;
+        $user->load('managing');
+        $user->load('licensed');
 
-        return response()->json(['token' => $token]);
+        return response()->json(['user' => $user, 'token' => $token]);
     }
 
     // logout user

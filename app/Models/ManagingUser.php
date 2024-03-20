@@ -11,9 +11,12 @@ class ManagingUser extends Model
 
     protected $fillable = ['role', 'user_id'];
 
+    public static $rules = [
+        'role' => 'required'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
 }

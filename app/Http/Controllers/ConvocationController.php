@@ -15,6 +15,15 @@ class ConvocationController extends Controller
         return Convocation::paginate(5);
     }
 
+    /**
+     * Return last invitations for member
+     *
+     * @return void
+     */
+    public function invitations() {
+
+    }
+
 //    public function invite(Request $request, $id) {
 //        $convocation = Convocation::findOrFail($id);
 //        $convocation->invitations()->create($request->all());
@@ -49,13 +58,14 @@ class ConvocationController extends Controller
 
     public function store(Request $request)
     {
-        return Convocation::create($request->all());
-    }
-
-    public function storeAndInvite(Request $request)
-    {
         $convocation = Convocation::create($request->all());
-        $convocation->invitations()->createMany($request->input('invitations'));
+        $invitations = $request->input('invitations');
+        foreach ($invitations as $invitation) {
+            $convocation->invitations()->create([
+                'user_id' => intval($invitation)
+            ]);
+        }
+
         return $convocation;
     }
 

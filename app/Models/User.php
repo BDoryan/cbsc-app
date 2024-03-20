@@ -60,7 +60,30 @@ class User extends Authenticatable
         'phone' => 'required|min:10|max:10|unique:users',
         'birthdate' => 'required|date',
         'sex' => 'required|in:W,M',
+        'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:8192',
     ];
+
+    /**
+     * Return all convocations for the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function convocations(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    {
+        return $this->hasManyThrough(Convocation::class, ConvocationInvitation::class);
+    }
+
+    /**
+     * Return all pending invitations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function invitations(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ConvocationInvitation::class)
+            ->whereDoesntHave('accepted')
+            ->whereDoesntHave('declined');
+    }
 
     public function licensed(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
