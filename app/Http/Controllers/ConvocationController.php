@@ -12,7 +12,13 @@ class ConvocationController extends Controller
 
     public function index(): LengthAwarePaginator
     {
-        return Convocation::paginate(5);
+        return Convocation::paginate(25);
+    }
+
+    public function myConvocations() {
+        // Get user authenticated
+        $user = auth()->user();
+        return $user->convocations()->paginate(25);
     }
 
     /**

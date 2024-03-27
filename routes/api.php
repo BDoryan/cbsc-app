@@ -37,6 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/users/{id}', 'App\Http\Controllers\UserController@delete');
 
     Route::get('/convocations', 'App\Http\Controllers\ConvocationController@index');
+    Route::get('/me/convocations', 'App\Http\Controllers\ConvocationController@myConvocations');
     Route::post('/convocations', 'App\Http\Controllers\ConvocationController@store');
     Route::get('/convocations/{id}', 'App\Http\Controllers\ConvocationController@show');
     Route::put('/convocations/{id}', 'App\Http\Controllers\ConvocationController@update');

@@ -7,7 +7,7 @@ import axios from "axios";
 const MemberSet: React.FC<RouteComponentProps<{}>> = () => {
 
     const [loading, setLoading] = useState(false);
-    const {API, token_session, addNotification, getUserById} = useAppContext();
+    const {API, toResource, token_session, addNotification, getUserById} = useAppContext();
     const {id} = useParams();
     const [user, setUser] = useState<any | boolean>(false);
     const [roles, setRoles] = useState([]);
@@ -188,7 +188,7 @@ const MemberSet: React.FC<RouteComponentProps<{}>> = () => {
                             <div className="flex flex-row items-center justify-center ">
                                 <div
                                     className="rounded-[50%] overflow-hidden shadow-md max-w-1/2 w-[100px] h-[100px] relative mt-4">
-                                    <img ref={image} src={user.picture ?? ''} id="preview" className=""
+                                    <img ref={image} src={toResource(user.picture) ?? ''} id="preview" className=""
                                          alt=""/>
                                     <div
                                         className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-25 z-1">
@@ -274,8 +274,19 @@ const MemberSet: React.FC<RouteComponentProps<{}>> = () => {
                                     className="block relative h-9 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                     <select id="sex-select" name="sex"
                                             className="absolute px-3 bg-transparent top-0 left-0 w-full h-full bg-red-700">
-                                        <option value="M">Homme</option>
-                                        <option value="W">Femme</option>
+                                        {
+                                            user.role == "W" ? (
+                                                <>
+                                                    <option value="W">Femme</option>
+                                                    <option value="M">Homme</option>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <option value="M">Homme</option>
+                                                    <option value="W">Femme</option>
+                                                </>
+                                            )
+                                        }
                                     </select>
                                     {errors['sex'] && (
                                         <p className="text-red-500 text-sm">{errors['sex']}</p>

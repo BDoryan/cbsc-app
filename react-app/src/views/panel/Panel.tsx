@@ -10,7 +10,7 @@ interface PanelProps extends RouteComponentProps {
 
 const Panel: React.FC<PanelProps> = ({}) => {
 
-    const {user, logout} = useAppContext();
+    const {user, toResource, logout} = useAppContext();
     const [isSidebarOpen, setSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {
@@ -92,7 +92,7 @@ const Panel: React.FC<PanelProps> = ({}) => {
                             </details>
                         </div>
                         <div className="mt-auto flex gap-2 overflow-hidden items-center">
-                            <img src={user.picture ?? ''}
+                            <img src={toResource(user.picture) ?? ''}
                                  className="object-cover w-[40px] h-[40px] rounded-[50%]" alt=""/>
                             <div className="flex flex-col justify-center gap-1">
                                 <span

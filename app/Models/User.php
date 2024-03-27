@@ -70,7 +70,21 @@ class User extends Authenticatable
      */
     public function convocations(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
     {
-        return $this->hasManyThrough(Convocation::class, ConvocationInvitation::class);
+        return $this
+            ->hasManyThrough(
+                Convocation::class,
+                ConvocationInvitation::class,
+                'user_id',
+                'id',
+                'id',
+                'convocation_id'
+            )
+            ->leftJoin(
+                'convocation_invitations_accepted',
+                'convocation_invitations.id',
+                '=',
+                'convocation_invitations_accepted.convocation_invitation_id'
+            );
     }
 
     /**

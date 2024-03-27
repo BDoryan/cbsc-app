@@ -15,19 +15,28 @@ interface AppContextProps {
     token_session: string,
     startLoading: () => void,
     stopLoading: () => void,
-    API: string
+    API: string,
+    toResource: (url: string) => string
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 const AppContextProvider: React.FC<{ children: ReactNode }> = ({children}) => {
 
-    const API = 'http://'+window.location.hostname+':8000/api/';
+    const API_SERVER = 'http://'+window.location.hostname+':8000/';
+    const API = API_SERVER+'api/';
 
     const [user, setUser] = useState(null);
     const [tokenSession, setTokenSession] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+
+    const toResource = (url: string|undefined): string => {
+        if(!url) return null;
+        if (url.charAt(0) === '/')
+            url = url.substr(1);
+        return API_SERVER + url;
+    }
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -177,6 +186,7 @@ const AppContextProvider: React.FC<{ children: ReactNode }> = ({children}) => {
                 loginWithToken,
                 getUserById,
                 API,
+                toResource,
                 logout,
                 token_session: tokenSession
             }}>

@@ -7,7 +7,7 @@ import axios from "axios";
 const Members: React.FC<RouteComponentProps<{}>> = () => {
 
 
-    const {API, imManager, token_session} = useAppContext();
+    const {API, toResource, imManager, token_session} = useAppContext();
     const [members, setMembers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
@@ -144,7 +144,7 @@ const Members: React.FC<RouteComponentProps<{}>> = () => {
                                  className="w-full bg-white border border-gray-200 rounded-lg shadow">
                                 <div className="flex flex-col items-center p-10 pb-0">
                                     <img className="w-24 h-24 mb-3 rounded-full shadow-lg object-cover"
-                                         src={member.picture}
+                                         src={toResource(member.picture)}
                                          alt="Bonnie image"/>
                                     <h5 className="mb-1 text-xl font-medium text-gray-900">{member.firstname + ' ' + member.lastname}</h5>
                                     <span

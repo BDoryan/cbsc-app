@@ -9,8 +9,6 @@ class Convocation extends Model
 {
     use HasFactory;
 
-    protected $table = 'convocation_invitations_accepted';
-
     /**
      * @var string[] $fillable
      */
